@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="518.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScannerOutput">
+   <children>
+      <TabPane layoutX="-1.0" layoutY="-1.0" prefHeight="518.0" prefWidth="767.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Tokens">
+            <content>
+              <AnchorPane fx:id="tokenTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="6.0" layoutY="7.0" prefHeight="480.0" prefWidth="761.0">
+                           <children>
+                              <TableView fx:id="TabelaTokens" layoutX="14.0" layoutY="29.0" prefHeight="449.0" prefWidth="743.0">
+                                <columns>
+                                  <TableColumn fx:id="ColunaLinha" editable="false" prefWidth="70.0" sortable="false" styleClass="tableColumn" text="N° Linha" />
+                                  <TableColumn fx:id="ColunaCategora" editable="false" minWidth="0.0" prefWidth="183.0" sortable="false" styleClass="tableColumn" text="Categoria                         |" />
+                                    <TableColumn fx:id="ColunaNome" editable="false" minWidth="0.0" prefWidth="252.0" sortable="false" styleClass="tableColumn" text="Nome                                           |" />
+                                    <TableColumn fx:id="ColunaValor" prefWidth="234.0" sortable="false" styleClass="tableColumn" text="Valor                                     |" />
+                                </columns>
+                              </TableView>
+                              <Label fx:id="TotalTokens" layoutX="15.0" layoutY="-1.0" prefHeight="17.0" prefWidth="345.0" text="Análise">
+                                 <font>
+                                    <Font name="System Bold Italic" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children></Pane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

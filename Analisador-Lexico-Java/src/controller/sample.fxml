@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <center>
-      <AnchorPane fx:id="myPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="888.0" style="-fx-background-color: #03040c;" styleClass="scanbtn" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="meuPainel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="888.0" style="-fx-background-color: #03040c;" styleClass="scanbtn" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="38.0" layoutY="359.0" prefHeight="52.0" prefWidth="158.0" text="Criado por:" textFill="#d0cbcb">
                <font>
@@ -54,7 +54,7 @@
    <top>
       <HBox prefHeight="21.0" prefWidth="888.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnScan" disable="true" mnemonicParsing="false" onAction="#clickScan" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: purple;" text="Scanear" textFill="#f4f0f8">
+            <Button fx:id="btnEscanear" disable="true" mnemonicParsing="false" onAction="#clicarEscanear" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: purple;" text="Scanear" textFill="#f4f0f8">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font></Button>
@@ -62,60 +62,41 @@
                <menus>
                   <Menu id="menuu" fx:id="Menu" mnemonicParsing="false" styleClass="menuu">
                      <graphic>
-                        <Label id="lmenu" text="Arquivo" textAlignment="CENTER" textFill="#d6eb1e" />
+                        <Label id="lmenu" text="Arquivo" textAlignment="CENTER" />
                      </graphic>
                      <items>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" fx:id="btnNew" onAction="#clickNew" text="Novo" />
+                              <Button id="litem" fx:id="btnNovo" onAction="#clicarNovo" text="Novo" />
                            </graphic>
                         </MenuItem>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" fx:id="btnOpen" onAction="#clickOpen" text="Abrir" />
+                              <Button id="litem" fx:id="btnAbrir" onAction="#clicarAbrir" text="Abrir" />
                            </graphic>
                         </MenuItem>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" fx:id="btnSave" disable="true" onAction="#clickSave" text="Salvar" />
+                              <Button id="litem" fx:id="btnSalvar" disable="true" onAction="#clicarSalvar" text="Salvar" />
                            </graphic>
                         </MenuItem>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" fx:id="btnSaveAs" disable="true" onAction="#clickSaveAs" text="Salvar como" />
+                              <Button id="litem" fx:id="btnSalvarComo" disable="true" onAction="#clicarSalvarComo" text="Salvar como" />
                            </graphic>
                         </MenuItem>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" fx:id="btnClose" disable="true" onAction="#clickClose" text="Fechar" />
+                              <Button id="litem" fx:id="btnFechar" disable="true" onAction="#clicarFechar" text="Fechar" />
                            </graphic>
                         </MenuItem>
                         <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
                            <graphic>
-                              <Button id="litem" onAction="#clickExit" text="Sair" />
+                              <Button id="litem" onAction="#clicarSair" text="Sair" />
                            </graphic>
                         </MenuItem>
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" styleClass="menuu">
-                     <items>
-                        <MenuItem mnemonicParsing="false" styleClass="menuItem">
-                           <graphic>
-                              <Button id="litem" mnemonicParsing="false" text="font color" />
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false">
-                     <items>
-                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
-                           <graphic>
-                              <Button id="litem" fx:id="btnAbout" text="Developer Info" />
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" />
                </menus>
             </MenuBar>
          </children>

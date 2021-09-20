@@ -1,8 +1,4 @@
-package Scanner;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+package tokens;
 
 public class Scan {
     public static final String[] KEYWORD={"abstract","assert",
@@ -33,24 +29,24 @@ public class Scan {
     }
     public static String getSymbolName(String symbol){
         switch (symbol){
-            case "=":return "Assignment OP";
+            case "=":return "OP";
             case "--":
             case "++":
-            case"!": return "Unary OP";
+            case"!": return "OP";
             case"+":
             case "-":
             case"/":
             case "*":
-            case "%": return "Airthmetic OP";
+            case "%": return "OP";
             case "<":
             case ">":
             case "==":
             case "<=":
             case ">=":
-            case "!=": return "Relation OP";
+            case "!=": return "OP";
             case "&&":
-            case"||": return "Logical OP";
-            default: return "symbol";
+            case"||": return "OP";
+            default: return "";
         }
     }
 
