@@ -10,7 +10,7 @@ public class Arquivo {
     private String arquivoTexto;
     private int tamanho;
 
-    public boolean input(File f)
+    public boolean leituraArquivo(File f)
     {
         try{
             FileInputStream lerArquivo=new FileInputStream(f);
@@ -28,7 +28,7 @@ public class Arquivo {
         return true;
     }
     
-    public boolean output(File f)
+    public boolean escritaArquivo(File f)
     {
         try{
             FileOutputStream salvarArquivo =new FileOutputStream(f);
@@ -41,12 +41,12 @@ public class Arquivo {
         return true;
     }
     
-    void setFiletext(String s)
+    void setConteudoArquivo(String s)
     {
     	arquivoTexto=s;
     }
     
-    public String getFiletext()
+    public String getConteudoArquivo()
     {
         return arquivoTexto;
     }

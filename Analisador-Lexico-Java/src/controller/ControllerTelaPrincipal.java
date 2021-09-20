@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tokens.Scan;
+import tokens.AnaliseTokens;
 import tokens.Token;
 
 import javax.swing.*;
@@ -20,15 +20,15 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
-public class Controller implements Initializable {
+public class ControllerTelaPrincipal implements Initializable {
 
 	static ObservableList<Token> listarTokens = FXCollections.observableArrayList();
 	
 	TextArea AreaTexto = new TextArea();
-	static String codeWithoutNonTokens = "";
+	static String codigoSemNaoTokens = "";
 	StringBuffer temp;
 	private File arquivo;
-	boolean isFileOpen = false;
+	boolean arquivoAberto = false;
 
 	@FXML
 	Button btnNovo;
@@ -50,7 +50,7 @@ public class Controller implements Initializable {
 		AreaTexto.setPrefSize(888, 540);
 	}
 
-	// Remover os Não tokens
+	// Remover os Não tokens sendo principalmente trechos de comentarios pelo codigo
 	void removerNaoToken(String tokenName, String tStart, String tEnd) {
 		while (temp.indexOf(tStart) != -1) {
 			int start = temp.indexOf(tStart);
@@ -74,73 +74,74 @@ public class Controller implements Initializable {
 
 	@FXML
 	void clicarEscanear() {
+		le_tokens();
+	}
+
+	public void le_tokens() {
 		try {
 			boolean isString = false;
+			//limpa a lista para uma nova visualização
 			listarTokens.clear();
 			temp = new StringBuffer(AreaTexto.getText());
 			removerNaoToken("comentario unico", "//", "\n");
 			removerNaoToken("varios comentario", "/*", "*/");
 			removerNaoToken("preprocessor", "import", ";");
 			removerNaoToken("package", "package", ";");
-			codeWithoutNonTokens = temp.toString();
-			StringTokenizer lineTokenizer = new StringTokenizer(codeWithoutNonTokens, "\n", true);
-			int lineNo = 1;
-			while (lineTokenizer.hasMoreTokens()) {
-				String nextToken = lineTokenizer.nextToken();
+			codigoSemNaoTokens = temp.toString();
+			StringTokenizer linhaTokenizer = new StringTokenizer(codigoSemNaoTokens, "\n", true);
+			int linha = 1;
+			while (linhaTokenizer.hasMoreTokens()) {
+				String nextToken = linhaTokenizer.nextToken();
 				if (nextToken.equals("\n")) {
-					lineNo++;
+					linha++;
 					continue;
 				}
-				;
+
 				StringTokenizer spaceTokenizer = new StringTokenizer(nextToken, " ");
 				while (spaceTokenizer.hasMoreTokens()) {
 					String token = spaceTokenizer.nextToken();
-					if (Scan.isKeyword(token) && !isString)
-						// is it a Keyword ??
-						listarTokens.add(new Token(lineNo, "KEYWORD", token, token));
+					if (AnaliseTokens.ePalavraChave(token) && !isString)
+						//Verifica-se se o que esta escrito no codigo não é uma palavra reservada pela linguagem java
+						listarTokens.add(new Token(linha, "Palavra reservada", token, token));
 					else {
 						for (int i = 0; i < token.length(); i++) {
 							String character = Character.toString(token.charAt(i));
-							// is it a spcial symbol??
-							if (Scan.isSymbol(character) && !isString) {
+							// Trecho em que se verifica os simbolos de operações no codigo como por exemplo o =
+							if (AnaliseTokens.isSymbol(character) && !isString) {
 
-								if (((i + 1) < token.length()) && (character.equals("+") || character.equals("-")
-										|| character.equals("&") || character.equals("|") || character.equals("="))) {
+								if (((i + 1) < token.length()) && ( character.equals("-") || character.equals("&") || character.equals("="))) {
 									String character2 = Character.toString(token.charAt(i + 1));
 									if (character == character2) {
-										listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL",
-												Scan.getSymbolName(character + character2), character + character2));
+										listarTokens.add(new Token(linha, "Token",AnaliseTokens.getNomeSimbolo(character + character2), character + character2));
 										i++;
 										continue;
 									} else {
-										listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", Scan.getSymbolName(character),
+										listarTokens.add(new Token(linha, "Token", AnaliseTokens.getNomeSimbolo(character),
 												character));
 										continue;
 									}
-								} else if ((((i + 1) < token.length())
-										&& (character.equals("!") || character.equals("<") || character.equals(">")))) {
+								} else if ((((i + 1) < token.length()) && (character.equals("<") || character.equals(">") || character.equals("*") || character.equals("+") ))) {
 									String character2 = Character.toString(token.charAt(i + 1));
 									if (character2.equals("=")) {
-										listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL",
-												Scan.getSymbolName(character + character2), character + character2));
+										listarTokens.add(new Token(linha, "Token",AnaliseTokens.getNomeSimbolo(character + character2), character + character2));
 										i++;
 										continue;
 									} else {
-										listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", Scan.getSymbolName(character),
-												character));
+										listarTokens.add(new Token(linha, "Token", AnaliseTokens.getNomeSimbolo(character),character));
 										continue;
 									}
 
 								} else {
-									listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", Scan.getSymbolName(character),
-											character));
+									//Trecho do codigo que serve para adiiconar os ;,(),{},[] a lista de tokens 
+									//listarTokens.add(new Token(linha, "Simbolo", Scan.getSymbolName(character),character));
 									continue;
 								}
 							}
-							// is it a identifier??
+							
+							//Verifica-se se a palavra que esta sendo lida é um identificador de uma palavra que é reservado do sistema
+							// ou se é um nome de variavel ID
 							String tempToken = "";
-							if (Scan.isAlaphabet(character) && !isString) {
-
+							if (AnaliseTokens.eAlfabeto(character) && !isString) {
 								do {
 									tempToken += character;
 									i++;
@@ -148,15 +149,15 @@ public class Controller implements Initializable {
 										character = Character.toString(token.charAt(i));
 									else
 										break;
-								} while (Scan.isAlaphabet(character) || Scan.isNumber(character));
+								} while (AnaliseTokens.eAlfabeto(character) || AnaliseTokens.eNumero(character));
 								--i;
-								if (Scan.isKeyword(tempToken))
-									listarTokens.add(new Token(lineNo, "KEYWORD", tempToken, tempToken));
+								if (AnaliseTokens.ePalavraChave(tempToken))
+									listarTokens.add(new Token(linha, "Palavra Reservada", tempToken, tempToken));
 								else
-									listarTokens.add(new Token(lineNo, "OTHER", "Identfier", tempToken));
+									listarTokens.add(new Token(linha, "Token", "ID", tempToken));
 								continue;
 							}
-							if (Scan.isNumber(character) && !isString) {
+							if (AnaliseTokens.eNumero(character) && !isString) {
 								boolean dotError = false;
 								tempToken = "";
 								do {
@@ -170,37 +171,43 @@ public class Controller implements Initializable {
 										}
 									} else
 										break;
-								} while (Scan.isNumber(character) || character.equals("."));
-								// --i;
-								listarTokens.add(new Token(lineNo, "OTHER", "number", tempToken));
+								} while (AnaliseTokens.eNumero(character) || character.equals("."));
+								if(tempToken.contains(".")) {
+								listarTokens.add(new Token(linha, "Token", "Nreal", tempToken));
+								}else { 
+								listarTokens.add(new Token(linha, "Token", "Nint", tempToken));
+								}
 								if (dotError) {
-									listarTokens.add(new Token(lineNo, "Error", "error", "error"));
-									listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "symbol", "."));
+									listarTokens.add(new Token(linha, "Erro", "erro", "erro"));
+									listarTokens.add(new Token(linha, "Token", "simbolo", "."));
 								}
 								continue;
 							}
-							// for characters
+							// Funções para se verificar caracteres que foram escritos dentro de aspas simples
 							if (character.equals("\'") && !isString) {
-								listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "symbol", "\'"));
+								//Serve para adicionar a aspa simples inicial na lista de tokens
+								//listarTokens.add(new Token(linha, "Token", "simbolo", "\'"));
 								i++;
 								if (i < token.length()) {
 									character = Character.toString(token.charAt(i));
-									listarTokens.add(new Token(lineNo, "OTHER", "char", character));
+									listarTokens.add(new Token(linha, "Token", "Nstring", character));
 								}
 								i++;
 								if (i < token.length()) {
+									//Serve para adicionar a aspa simples final a lista de tokens
 									character = Character.toString(token.charAt(i));
-									listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "symbol", character));
+									//listarTokens.add(new Token(linha, "Token", "simbolo", character));
 								}
 								if (!character.equals("\'")) {
-									listarTokens.add(new Token(lineNo, "ERROR", "error", "Error"));
+									listarTokens.add(new Token(linha, "Erro", "erro", "erro"));
 								}
 								continue;
 							}
 							tempToken += "";
-							// handle strings
+							// Trecho do codigo para verificar as strings escritas em aspas duplas
 							if (character.equals("\"") && !isString) {
-								listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "symbol", "\""));
+								//Serve para adicionar a aspa dupla inicial na lista de tokens
+								//listarTokens.add(new Token(linha, "Token", "simbolo", "\""));
 								i++;
 								if (i < token.length())
 									character = Character.toString(token.charAt(i));
@@ -214,9 +221,11 @@ public class Controller implements Initializable {
 									else
 										break;
 								}
-								listarTokens.add(new Token(lineNo, "OTHER", "string", tempToken));
+								//Aqui ele ira adicionar o conteudo que esta entre aspas na lista de tokens
+								listarTokens.add(new Token(linha, "Token", "Nstring", tempToken));
 								if (character.equals("\"")) {
-									listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "SYMBOL", "\""));
+									//Serve para adicionar a aspa dupla final na lista de tokens
+									//listarTokens.add(new Token(linha, "Token", "simbolo", "\""));
 									continue;
 								} else {
 									isString = true;
@@ -224,6 +233,7 @@ public class Controller implements Initializable {
 								}
 							}
 		
+							//Trecho que se verifica se caso foi inserido alguma aspa adicional no inicio ou final da string 
 							if (isString) {
 								while (!character.equals("\"")) {
 									tempToken += character;
@@ -235,7 +245,8 @@ public class Controller implements Initializable {
 								}
 								listarTokens.get(listarTokens.size() - 1).atualizarValor(tempToken = " " + tempToken);
 								if (character.equals("\"")) {
-									listarTokens.add(new Token(lineNo, "SPCIAL SYMBOL", "SYMBOL", "\""));
+									//Aqui irá adicionar a lista de tokens essa aspa adicional caso seja preciso so tirar o comentario
+									//listarTokens.add(new Token(linha, "Token", "simbolo", "\""));
 									isString = false;
 									continue;
 								} else
@@ -244,24 +255,25 @@ public class Controller implements Initializable {
 
 							}
 							listarTokens.add(
-									new Token(lineNo, "INVALID", "invlaid", token.substring(token.indexOf(character))));
+									new Token(linha, "Invalido", "Invalido", token.substring(token.indexOf(character))));
 							break;
 						}
 					}
 				}
 			}
 
-			scannerOutputPage();
+			TelaAnaliseTokens();
 
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.toString());
 		}
 	}
-
-	void scannerOutputPage() throws Exception {
+	
+	
+	void TelaAnaliseTokens() throws Exception {
 		Parent root;
 		Stage primaryStage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("ScannerOutput.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/telas/TelaAnalise.fxml"));
 		primaryStage.setTitle("Resultado do scanner");
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(Main.class.getResource("styling.css").toExternalForm());
@@ -280,7 +292,7 @@ public class Controller implements Initializable {
 		AreaTexto.setVisible(true);
 		btnFechar.setDisable(false);
 		btnSalvarComo.setDisable(false);
-		isFileOpen = true;
+		arquivoAberto = true;
 		btnNovo.setDisable(true);
 		btnAbrir.setDisable(true);
 		btnEscanear.setDisable(false);
@@ -294,16 +306,16 @@ public class Controller implements Initializable {
 			if (!(arquivo.getName()).contains(".java"))
 				throw new Exception();
 			Arquivo file = new Arquivo();
-			if (file.input(arquivo)) {
+			if (file.leituraArquivo(arquivo)) {
 				meuPainel.getChildren().clear();
 				meuPainel.getChildren().add(AreaTexto);
-				AreaTexto.setText(file.getFiletext());
+				AreaTexto.setText(file.getConteudoArquivo());
 				AreaTexto.setVisible(true);
 				btnEscanear.setDisable(false);
 				btnSalvar.setDisable(false);
 				btnFechar.setDisable(false);
 				btnSalvarComo.setDisable(false);
-				isFileOpen = true;
+				arquivoAberto = true;
 				btnNovo.setDisable(true);
 			} else {
 				throw new Exception();
@@ -317,8 +329,8 @@ public class Controller implements Initializable {
 	void clicarSalvar() {
 		try {
 			Arquivo file = new Arquivo();
-			file.setFiletext(AreaTexto.getText());
-			file.output(arquivo);
+			file.setConteudoArquivo(AreaTexto.getText());
+			file.escritaArquivo(arquivo);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,  "Não foi possivel salvar o arquivo");
 		}
@@ -330,8 +342,8 @@ public class Controller implements Initializable {
 			FileChooser chooser = new FileChooser();
 			File f = chooser.showSaveDialog(null);
 			Arquivo file = new Arquivo();
-			file.setFiletext(AreaTexto.getText());
-			file.output(f);
+			file.setConteudoArquivo(AreaTexto.getText());
+			file.escritaArquivo(f);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Não foi possivel salvar o arquivo");
 		}
@@ -355,7 +367,7 @@ public class Controller implements Initializable {
 	}
 
 	void aoFechar(String button) {
-		if (!isFileOpen && button == "exit")
+		if (!arquivoAberto && button == "exit")
 			System.exit(0);
 		else {
 			Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -372,7 +384,7 @@ public class Controller implements Initializable {
 			if (button == "close") {
 				AreaTexto.clear();
 				AreaTexto.setVisible(false);
-				isFileOpen = false;
+				arquivoAberto = false;
 			} else {
 				System.exit(0);
 			}

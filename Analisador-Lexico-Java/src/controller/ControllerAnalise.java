@@ -11,7 +11,7 @@ import tokens.Token;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ScannerOutput implements Initializable {
+public class ControllerAnalise implements Initializable {
     //Ids das colunas e das tabelas de token
     @FXML
     TableView<Token> TabelaTokens;
@@ -37,7 +37,7 @@ public class ScannerOutput implements Initializable {
                 new PropertyValueFactory<Token, String>("nome"));
         ColunaValor.setCellValueFactory(
                 new PropertyValueFactory<Token, String>("valor"));
-        TabelaTokens.getItems().setAll(Controller.listarTokens);
-        TotalTokens.setText("O total de tokens é "+Controller.listarTokens.size());
+        TabelaTokens.getItems().setAll(ControllerTelaPrincipal.listarTokens);
+        TotalTokens.setText("O total de tokens é "+ControllerTelaPrincipal.listarTokens.size());
     }
 }
