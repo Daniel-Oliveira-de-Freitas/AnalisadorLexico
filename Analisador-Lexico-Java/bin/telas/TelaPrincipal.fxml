@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerTelaPrincipal">
+   <center>
+      <AnchorPane fx:id="meuPainel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="888.0" style="-fx-background-color: #03040c;" styleClass="scanbtn" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="38.0" layoutY="359.0" prefHeight="52.0" prefWidth="158.0" text="Criado por:" textFill="#d0cbcb">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="301.0" layoutY="67.0" prefHeight="73.0" prefWidth="545.0" text="Grupo Java" textFill="#50f522">
+               <font>
+                  <Font name="System Bold Italic" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="249.0" layoutY="132.0" prefHeight="73.0" prefWidth="424.0" text="Analizador Lexico" textFill="#50f522">
+               <font>
+                  <Font name="System Bold Italic" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="196.0" layoutY="359.0" prefHeight="52.0" prefWidth="158.0" text="Cassio" textFill="#d0cbcb">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="196.0" layoutY="389.0" prefHeight="52.0" prefWidth="158.0" text="Daniel" textFill="#d0cbcb">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="196.0" layoutY="421.0" prefHeight="52.0" prefWidth="158.0" text="Leonardo" textFill="#d0cbcb">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="197.0" layoutY="456.0" prefHeight="52.0" prefWidth="158.0" text="Tácio" textFill="#d0cbcb">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </center>
+   <top>
+      <HBox prefHeight="21.0" prefWidth="888.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnEscanear" disable="true" mnemonicParsing="false" onAction="#clicarEscanear" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: purple;" text="Scanear" textFill="#f4f0f8">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font></Button>
+            <MenuBar prefHeight="28.0" prefWidth="848.0" styleClass="menuBar">
+               <menus>
+                  <Menu id="menuu" fx:id="Menu" mnemonicParsing="false" styleClass="menuu">
+                     <graphic>
+                        <Label id="lmenu" text="Arquivo" textAlignment="CENTER" />
+                     </graphic>
+                     <items>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" fx:id="btnNovo" onAction="#clicarNovo" text="Novo" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" fx:id="btnAbrir" onAction="#clicarAbrir" text="Abrir" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" fx:id="btnSalvar" disable="true" onAction="#clicarSalvar" text="Salvar" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" fx:id="btnSalvarComo" disable="true" onAction="#clicarSalvarComo" text="Salvar como" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" fx:id="btnFechar" disable="true" onAction="#clicarFechar" text="Fechar" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem id="menuItem" mnemonicParsing="false" styleClass="menuItem">
+                           <graphic>
+                              <Button id="litem" onAction="#clicarSair" text="Sair" />
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

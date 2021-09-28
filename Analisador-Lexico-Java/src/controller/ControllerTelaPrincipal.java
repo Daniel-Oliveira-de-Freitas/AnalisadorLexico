@@ -29,7 +29,7 @@ public class ControllerTelaPrincipal implements Initializable {
 	StringBuffer temp;
 	private File arquivo;
 	boolean arquivoAberto = false;
-
+	int abreChave =0, fechaChave=0;
 	@FXML
 	Button btnNovo;
 	@FXML
@@ -132,6 +132,23 @@ public class ControllerTelaPrincipal implements Initializable {
 									}
 
 								} else {
+									//Funcção para verificar se existe um abre e fecha chaves, pois se uma chave foi aberta para um bloco de codigo
+									//Ela deve ser fechada ou indicara erro léxico
+										if(character.equals("{")) {
+											abreChave++;
+										}else if(character.equals("}")) {
+											fechaChave++;
+											if(abreChave > fechaChave && fechaChave > 1) {
+												abreChave = 0;
+												fechaChave = 0;
+												listarTokens.add(new Token(linha, "Erro", "Chaves de fechamento em falta", "erro"));
+											}
+											if(fechaChave > abreChave){
+												listarTokens.add(new Token(linha, "Erro", "Chaves de abertura em falta", "erro"));
+											} 
+											
+										}
+						
 									//Trecho do codigo que serve para adiiconar os ;,(),{},[] a lista de tokens 
 									//listarTokens.add(new Token(linha, "Simbolo", Scan.getSymbolName(character),character));
 									continue;
@@ -188,6 +205,9 @@ public class ControllerTelaPrincipal implements Initializable {
 								//Serve para adicionar a aspa simples inicial na lista de tokens
 								//listarTokens.add(new Token(linha, "Token", "simbolo", "\'"));
 								i++;
+								if (!character.equals("\'")) {
+									listarTokens.add(new Token(linha, "Erro", "erro", "erro"));
+								}else {
 								if (i < token.length()) {
 									character = Character.toString(token.charAt(i));
 									listarTokens.add(new Token(linha, "Token", "Nstring", character));
@@ -198,10 +218,8 @@ public class ControllerTelaPrincipal implements Initializable {
 									character = Character.toString(token.charAt(i));
 									//listarTokens.add(new Token(linha, "Token", "simbolo", character));
 								}
-								if (!character.equals("\'")) {
-									listarTokens.add(new Token(linha, "Erro", "erro", "erro"));
-								}
 								continue;
+								}
 							}
 							tempToken += "";
 							// Trecho do codigo para verificar as strings escritas em aspas duplas
@@ -221,8 +239,13 @@ public class ControllerTelaPrincipal implements Initializable {
 									else
 										break;
 								}
+								//if que verifica se o parenteses foi fechado corretamnte
+								if (!character.equals("\"")) {
+									listarTokens.add(new Token(linha, "Erro", "erro", "erro"));
+								}else {
 								//Aqui ele ira adicionar o conteudo que esta entre aspas na lista de tokens
-								listarTokens.add(new Token(linha, "Token", "Nstring", tempToken));
+							     	listarTokens.add(new Token(linha, "Token", "Nstring", tempToken));
+								}
 								if (character.equals("\"")) {
 									//Serve para adicionar a aspa dupla final na lista de tokens
 									//listarTokens.add(new Token(linha, "Token", "simbolo", "\""));
