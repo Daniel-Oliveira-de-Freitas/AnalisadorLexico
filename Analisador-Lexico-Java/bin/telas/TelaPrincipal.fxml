@@ -18,7 +18,7 @@
          <children>
             <ImageView fitHeight="551.0" fitWidth="890.0" layoutY="-1.0">
                <image>
-                  <Image url="@../../../img/capa.png" />
+                  <Image url="@../../img/capa.png" />
                </image>
             </ImageView>
             <Label layoutX="24.0" layoutY="399.0" prefHeight="52.0" prefWidth="158.0" text="Criado por:" textFill="WHITE">

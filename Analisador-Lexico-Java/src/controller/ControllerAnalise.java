@@ -38,6 +38,6 @@ public class ControllerAnalise implements Initializable {
         ColunaValor.setCellValueFactory(
                 new PropertyValueFactory<Token, String>("valor"));
         TabelaTokens.getItems().setAll(ControllerTelaPrincipal.listarTokens);
-        TotalTokens.setText("O total de tokens é "+ControllerTelaPrincipal.listarTokens.size());
+        TotalTokens.setText("O total de tokens e "+ControllerTelaPrincipal.listarTokens.size());
     }
 }

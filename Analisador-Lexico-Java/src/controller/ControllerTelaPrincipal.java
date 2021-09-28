@@ -29,7 +29,7 @@ public class ControllerTelaPrincipal implements Initializable {
 	StringBuffer temp;
 	private File arquivo;
 	boolean arquivoAberto = false;
-	int abreChave =0, fechaChave=0;
+	int abreChave =0, fechaChave=0, existeChaveAbertura =0 ,existeChaveFechamento=0;
 	@FXML
 	Button btnNovo;
 	@FXML
@@ -56,7 +56,7 @@ public class ControllerTelaPrincipal implements Initializable {
 			int start = temp.indexOf(tStart);
 			String tempEnd = temp.substring(start);
 			String comment = temp.substring(start, start + tempEnd.indexOf(tEnd) + 2);
-			if (tokenName.equals("single comment"))
+			if (tokenName.equals("comentario unico"))
 				temp.delete(start, start + tempEnd.indexOf(tEnd));
 			else if (tokenName.equals("import") || tokenName.equals("package"))
 				temp.delete(start, start + tempEnd.indexOf(tEnd) + 1);
@@ -107,9 +107,10 @@ public class ControllerTelaPrincipal implements Initializable {
 						for (int i = 0; i < token.length(); i++) {
 							String character = Character.toString(token.charAt(i));
 							// Trecho em que se verifica os simbolos de operações no codigo como por exemplo o =
+							//Se o simbolo esta atribuindo ou se esta somando ou subtraindo
 							if (AnaliseTokens.isSymbol(character) && !isString) {
 
-								if (((i + 1) < token.length()) && ( character.equals("-") || character.equals("&") || character.equals("="))) {
+								if (((i + 1) < token.length()) && ( character.equals("-") || character.equals("+") || character.equals("=") || character.equals("/") || character.equals("*"))) {
 									String character2 = Character.toString(token.charAt(i + 1));
 									if (character == character2) {
 										listarTokens.add(new Token(linha, "Token",AnaliseTokens.getNomeSimbolo(character + character2), character + character2));
@@ -120,7 +121,7 @@ public class ControllerTelaPrincipal implements Initializable {
 												character));
 										continue;
 									}
-								} else if ((((i + 1) < token.length()) && (character.equals("<") || character.equals(">") || character.equals("*") || character.equals("+") ))) {
+								} else if ((((i + 1) < token.length()) && (character.equals("+") || character.equals("*") || character.equals("-") || character.equals("/")))) {
 									String character2 = Character.toString(token.charAt(i + 1));
 									if (character2.equals("=")) {
 										listarTokens.add(new Token(linha, "Token",AnaliseTokens.getNomeSimbolo(character + character2), character + character2));
@@ -132,21 +133,19 @@ public class ControllerTelaPrincipal implements Initializable {
 									}
 
 								} else {
-									//Funcção para verificar se existe um abre e fecha chaves, pois se uma chave foi aberta para um bloco de codigo
+									//Função para verificar se existe um abre e fecha chaves, pois se uma chave foi aberta para um bloco de codigo
 									//Ela deve ser fechada ou indicara erro léxico
 										if(character.equals("{")) {
 											abreChave++;
+											existeChaveAbertura++;
 										}else if(character.equals("}")) {
 											fechaChave++;
-											if(abreChave > fechaChave && fechaChave > 1) {
-												abreChave = 0;
-												fechaChave = 0;
-												listarTokens.add(new Token(linha, "Erro", "Chaves de fechamento em falta", "erro"));
-											}
+											existeChaveFechamento++;
 											if(fechaChave > abreChave){
 												listarTokens.add(new Token(linha, "Erro", "Chaves de abertura em falta", "erro"));
+												if(abreChave>0 && fechaChave >0) {
+												}
 											} 
-											
 										}
 						
 									//Trecho do codigo que serve para adiiconar os ;,(),{},[] a lista de tokens 
@@ -284,6 +283,18 @@ public class ControllerTelaPrincipal implements Initializable {
 					}
 				}
 			}
+			
+			if(existeChaveAbertura ==0 && existeChaveFechamento ==0) {
+				listarTokens.add(new Token(linha, "Não existe chaves no programa", "Não existe chaves no programa", "Não existe chaves no programa"));
+			}
+			if(abreChave > fechaChave) {
+				listarTokens.add(new Token(linha, "Erro", "Chaves de fechamento em falta", "erro"));
+			}
+			abreChave = 0;
+			fechaChave= 0;
+			existeChaveAbertura = 0;
+			existeChaveFechamento= 0;
+			
 
 			TelaAnaliseTokens();
 
@@ -344,7 +355,7 @@ public class ControllerTelaPrincipal implements Initializable {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,  "Não foi possivel salvar o arquivo");
+			JOptionPane.showMessageDialog(null,  "Nao foi possivel salvar o arquivo");
 		}
 	}
 
@@ -355,7 +366,7 @@ public class ControllerTelaPrincipal implements Initializable {
 			file.setConteudoArquivo(AreaTexto.getText());
 			file.escritaArquivo(arquivo);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,  "Não foi possivel salvar o arquivo");
+			JOptionPane.showMessageDialog(null,  "Nao foi possivel salvar o arquivo");
 		}
 	}
 
@@ -368,7 +379,7 @@ public class ControllerTelaPrincipal implements Initializable {
 			file.setConteudoArquivo(AreaTexto.getText());
 			file.escritaArquivo(f);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Não foi possivel salvar o arquivo");
+			JOptionPane.showMessageDialog(null, "Nao foi possivel salvar o arquivo");
 		}
 	}
 
@@ -395,9 +406,9 @@ public class ControllerTelaPrincipal implements Initializable {
 		else {
 			Alert alert = new Alert(Alert.AlertType.WARNING);
 			alert.setTitle("Save");
-			alert.setHeaderText("Deseja salvar as alterações antes de sair");
+			alert.setHeaderText("Deseja salvar as alteracoes antes de sair");
 			ButtonType btnSalvar = new ButtonType("Sim");
-			ButtonType btnNaoSalvar = new ButtonType("Não");
+			ButtonType btnNaoSalvar = new ButtonType("Nao");
 			ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(btnSalvar, btnNaoSalvar, btnCancelar);
 			Optional<ButtonType> resultado = alert.showAndWait();

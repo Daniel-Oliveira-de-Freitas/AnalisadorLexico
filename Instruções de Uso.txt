@@ -13,3 +13,9 @@
   6.Sair- Opção secundária que serve para fechar o sistema.
 
   Ao abrir seu arquivo você podera ver o conteudo dele no textArea, nessa parte você pode alterar alguma coisa nele, caso não queira é só clicar na opção escanear e assim será aberto uma tela onde mostrará os tokens do código.
+
+Observaçãoes: 
+ - Por algum motivo durante a identação do codigo se for utilizado tab para dar espaço o analisador acusara erro, mas se utilizar da barra de espaço para espaçar na identação ele não dara erro;
+ - O executavel .jar pode demorar um pouco a abrir.
+
+Espero que esteja tudo OK :)
