@@ -1,0 +1,73 @@
+
+
+#codeArea .text{
+    -fx-fill: white;
+    -fx-font-size: 18;
+
+}
+#codeArea .keyword{
+    -fx-fill: #ffc909;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+#codeArea .comment{
+    -fx-fill: #00f400;
+}
+#codeArea .lineno{
+    -fx-background-color: #000000;
+}
+#codeArea {
+    -fx-background-color: rgba(12, 5, 26, 0.7);
+}
+#codeArea .brace{
+    -fx-fill: #02f8ff;
+}
+#codeArea .string{
+    -fx-fill: #ff854c;
+}
+.caret{
+    -fx-stroke: white;
+}
+.menuBar
+{
+    -fx-background-color: rgba(10, 8, 45, 0.83);
+    -fx-border-radius: 5px;
+    -fx-border-color: #03040c;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow( one-pass-box , yellow , 8 , 0.0 , 2 , 0);
+
+}
+#lmenu{
+    -fx-text-fill: yellow;
+    -fx-font-weight: bold;
+    -fx-spacing: 5px;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0);
+}
+#bPane{
+    -fx-background-color: rgba(10, 8, 45, 0.83);
+    -fx-effect: dropshadow( one-pass-box , yellow , 8 , 0.0 , 2 , 0);
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 5 5;
+}
+#litem{
+    -fx-background-color: rgba(8, 8, 72, 0);
+    -fx-text-fill: yellow;
+}
+.menu-item{
+    -fx-background-color: rgba(0, 0, 45, 0.83);
+}
+.tableColumn.table-cell{
+    -fx-font-size: 18;
+}
+#textArea{
+
+}
+.text-area .content{
+    -fx-background-color: rgb(22, 10, 37);
+}
+.text-area{
+    -fx-text-fill: white;
+    -fx-font-size: 18;
+    -fx-font-style: italic bold;
+}

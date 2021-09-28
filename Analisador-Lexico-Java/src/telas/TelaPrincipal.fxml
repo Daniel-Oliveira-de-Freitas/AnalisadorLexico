@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,37 +16,37 @@
    <center>
       <AnchorPane fx:id="meuPainel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="888.0" style="-fx-background-color: #03040c;" styleClass="scanbtn" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="38.0" layoutY="359.0" prefHeight="52.0" prefWidth="158.0" text="Criado por:" textFill="#d0cbcb">
+            <ImageView fitHeight="551.0" fitWidth="890.0" layoutY="-1.0">
+               <image>
+                  <Image url="@../../../img/capa.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="24.0" layoutY="399.0" prefHeight="52.0" prefWidth="158.0" text="Criado por:" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label layoutX="301.0" layoutY="67.0" prefHeight="73.0" prefWidth="545.0" text="Grupo Java" textFill="#50f522">
+            <Label layoutX="301.0" layoutY="47.0" prefHeight="73.0" prefWidth="434.0" text="Grupo Java" textFill="WHITE">
                <font>
-                  <Font name="System Bold Italic" size="48.0" />
+                  <Font name="News701 BT Bold" size="52.0" />
                </font>
             </Label>
-            <Label layoutX="249.0" layoutY="132.0" prefHeight="73.0" prefWidth="424.0" text="Analizador Lexico" textFill="#50f522">
-               <font>
-                  <Font name="System Bold Italic" size="48.0" />
-               </font>
-            </Label>
-            <Label layoutX="196.0" layoutY="359.0" prefHeight="52.0" prefWidth="158.0" text="Cassio" textFill="#d0cbcb">
+            <Label layoutX="162.0" layoutY="401.0" prefHeight="52.0" prefWidth="158.0" text="Cassio" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label layoutX="196.0" layoutY="389.0" prefHeight="52.0" prefWidth="158.0" text="Daniel" textFill="#d0cbcb">
+            <Label layoutX="162.0" layoutY="431.0" prefHeight="52.0" prefWidth="158.0" text="Daniel" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label layoutX="196.0" layoutY="421.0" prefHeight="52.0" prefWidth="158.0" text="Leonardo" textFill="#d0cbcb">
+            <Label layoutX="162.0" layoutY="463.0" prefHeight="52.0" prefWidth="158.0" text="Leonardo" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label layoutX="197.0" layoutY="456.0" prefHeight="52.0" prefWidth="158.0" text="Tácio" textFill="#d0cbcb">
+            <Label layoutX="163.0" layoutY="498.0" prefHeight="52.0" prefWidth="158.0" text="Tácio" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
