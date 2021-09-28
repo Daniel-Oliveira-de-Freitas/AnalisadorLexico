@@ -1,7 +1,7 @@
-##Instruções de como executar o programa##
+##Instruções de como executar o programa
 
-## Para executar o analisador deve-se abrir o executavel .jar presente na pasta enviada.
-## Os dois arquivos de teste estão presente numa pasta chamada arquivos de teste.
+## Para executar o analisador deve-se abrir o executavel .jar presente na pasta enviada.##
+## Os dois arquivos de teste estão presente numa pasta chamada arquivos de teste.##
 
  Após o programa ser executado, você verá uma tela com o nome dos integrantes e logo acima duas opções escanear e arquivo, selecione a opção arquivo e você terá as seguintes opções:
 <ul>
